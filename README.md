@@ -10,7 +10,7 @@ SwiftKey Pro is a professional text prediction tool that suggests the most likel
 ##  Live Project Links
 * **Experience the live app here:** [SwiftKey Pro Live](https://altamashali.shinyapps.io/bilingual-swiftkey-nlp/)
 * **Technical Analysis (English):** [Milestone Report EN](https://realaltamashali.github.io/bilingual-swiftkey-nlp/index.html)
-* **Technical Analysis (Deutsch):** [Meilensteinbericht DE](https://realaltamashali.github.io/bilingual-swiftkey-nlp/index-de.html)
+* **Technische Analyse (Deutsch):** [Meilensteinbericht DE](https://realaltamashali.github.io/bilingual-swiftkey-nlp/index-de.html)
 
 ##  Key Features
 * **Bilingual Intelligence:** Switch seamlessly between English and German NLP models with localized UI.
