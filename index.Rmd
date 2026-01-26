@@ -89,7 +89,7 @@ To explore the HC Corpora dataset (Blogs, News, and Twitter) and establish a fou
 
 * `Dataset  :` HC Corpora (EN-US) containing over 4M lines of text.
 * `Sampling :` 1% random sample used for computational efficiency and reproducibility.
-* Tools     :` `tidytext` for tokenization and `ggplot2` for frequency visualization.
+* `Tools    :` `tidytext` for tokenization and `ggplot2` for frequency visualization.
 
 ### Key Findings
 
@@ -170,5 +170,6 @@ I will implement a *Katz Back-off* model.
 * `Data Structure :` Use .rds files for fast loading and low memory footprint.
 
 ### Source Code
+
 
 The full source code for this project and the final Shiny Application is available on GitHub: [View Source on GitHub](https://github.com/realAltamashAli/bilingual-swiftkey-nlp)
