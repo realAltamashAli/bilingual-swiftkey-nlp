@@ -1,0 +1,174 @@
+---
+title: "Bilingual Predictive Modeling: SwiftKey Milestone Report (EN & DE)"
+author: "Altamash Ali"
+date: "January 26, 2026"
+output: 
+  html_document:
+    theme: flatly
+    highlight: tango
+    toc: true
+    toc_float: true
+    code_folding: hide
+---
+
+<style type="text/css">
+/* --- LOCALIZATION BUTTON --- */
+.lang-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+.btn-lang {
+    background-color: #ffffff;
+    border: 2px solid #2c3e50;
+    color: #2c3e50;
+    padding: 10px 20px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: 14px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.btn-lang:hover {
+    background-color: #2c3e50;
+    color: white;
+    text-decoration: none;
+}
+
+/* --- YOUR SAVED LAYOUT STYLING --- */
+#executive-summary {
+    margin-top: 80px !important;
+    padding-top: 0px !important;
+}
+
+h1 {
+    margin-top: 100px !important;
+    margin-bottom: 30px !important;
+    border-bottom: 1px solid #eee; 
+    padding-bottom: 10px;
+}
+
+h3 {
+    margin-top: 40px !important;
+    margin-bottom: 20px !important;
+    color: #2c3e50;
+}
+
+.tocify-extend-page {
+    display: none !important;
+    height: 0 !important;
+}
+
+hr {
+    margin-top: 100px;
+}
+
+body {
+    padding-bottom: 50px !important;
+}
+</style>
+
+<div class="lang-toggle">
+  <a href="index-de.html" class="btn-lang">🇩🇪 Auf Deutsch wechseln</a>
+</div>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+library(stringi); library(ggplot2); library(dplyr); library(tidytext); library(knitr)
+```
+
+# Executive Summary
+
+### Project Goal
+
+To explore the HC Corpora dataset (Blogs, News, and Twitter) and establish a foundation for a high-performance next-word prediction algorithm.
+
+### Methodology
+
+* `Dataset  :` HC Corpora (EN-US) containing over 4M lines of text.
+* `Sampling :` 1% random sample used for computational efficiency and reproducibility.
+* Tools     :` `tidytext` for tokenization and `ggplot2` for frequency visualization.
+
+### Key Findings
+
+* `Scale    :` The raw text files exceed 550MB, necessitating an optimized N-gram dictionary.
+* `Patterns :` N-gram distributions follow Zipf’s Law, allowing for significant data pruning without sacrificing accuracy.
+* `Strategy :` A Katz Back-off model is identified as the most efficient approach for the final Shiny application.
+
+# Data Statistics
+
+Before cleaning, I analyzed the raw files to understand their scale. The volume of data requires an efficient sampling strategy to maintain sub-second prediction latency in the final product.
+
+```{r}
+file_size_blogs <- file.info("en_US.blogs.txt")$size / 1024^2
+file_size_news <- file.info("en_US.news.txt")$size / 1024^2
+file_size_twitter <- file.info("en_US.twitter.txt")$size / 1024^2
+
+blogs <- readLines("en_US.blogs.txt", encoding = "UTF-8", skipNul = TRUE)
+news <- readLines("en_US.news.txt", encoding = "UTF-8", skipNul = TRUE)
+twitter <- readLines("en_US.twitter.txt", encoding = "UTF-8", skipNul = TRUE)
+
+summary_table <- data.frame(
+    File = c("Blogs", "News", "Twitter"),
+    Size_MB = c(file_size_blogs, file_size_news, file_size_twitter),
+    Line_Count = c(length(blogs), length(news), length(twitter)),
+    Word_Count = c(sum(stri_count_words(blogs)), sum(stri_count_words(news)), sum(stri_count_words(twitter)))
+)
+
+kable(summary_table, caption = "Summary of Raw Data Files (English US)", digits = 2)
+```
+
+# Data Cleaning & Sampling
+
+To ensure the algorithm remains fast and responsive, I extracted a *1% random sample*. The cleaning pipeline included: conversion to lowercase, removal of punctuation and numbers, and filtering of excess white space.
+
+```{r}
+set.seed(1234)
+sample_data <- c(sample(blogs, length(blogs) * 0.01),
+                 sample(news, length(news) * 0.01),
+                 sample(twitter, length(twitter) * 0.01))
+
+sample_df <- data.frame(text = sample_data, stringsAsFactors = FALSE)
+```
+
+# Exploratory Analysis
+
+I analyzed *N-grams*, which are sequences of words. This identifies the probability of word transitions—the core logic of my predictor.
+
+### Top Bigrams (Two-Word Pairs)
+
+Bigrams are the foundation of my next-word prediction. For example, the model identifies "of the" and "in the" as highly frequent anchors.
+
+```{r}
+bigrams <- sample_df %>%
+    unnest_tokens(bigram, text, token = "ngrams", n = 2) %>%
+    count(bigram, sort = TRUE) %>%
+    top_n(15, n)
+
+ggplot(bigrams, aes(x = reorder(bigram, n), y = n)) +
+    geom_col(fill = "#e74c3c") +
+    coord_flip() +
+    labs(title = "Top 15 Most Common English Bigrams", x = "Bigram", y = "Frequency") +
+    theme_minimal()
+```
+
+# Modeling Strategy
+
+### 1. The Algorithm
+
+I will implement a *Katz Back-off* model.
+
+* `Trigram Match  :` System first looks for a match based on the last two words typed.
+* `Bigram Match   :` If no trigram is found, it "backs off" to a one-word match.
+* `Unigram Match  :` Fallback to the most frequent word in the corpus.
+
+### 2. Performance Optimization
+
+* `Pruning        :` Remove N-grams that appear only once (singletons).
+* `Data Structure :` Use .rds files for fast loading and low memory footprint.
+
+### Source Code
+
+The full source code for this project and the final Shiny Application is available on GitHub: [View Source on GitHub](https://github.com/realAltamashAli/bilingual-swiftkey-nlp)
