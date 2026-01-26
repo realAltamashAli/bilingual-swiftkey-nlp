@@ -36,4 +36,4 @@ The engine was built using the **HC Corpora** dataset, following a rigorous data
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
-**Developed by Altamash Ali** [GitHub Profile](https://github.com/realAltamashAli) | [Shinyapps Portfolio](https://altamashali.shinyapps.io/)
+**Developed by Altamash Ali** [GitHub Profile](https://github.com/realAltamashAli)
