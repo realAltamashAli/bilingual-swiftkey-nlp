@@ -28,7 +28,7 @@ The engine was built using the **HC Corpora** dataset, following a rigorous data
 ##  Repository Structure & Data Privacy
 * `app.R`: The complete Shiny application logic, UI, and custom JavaScript.
 * `index.Rmd` / `index-de.Rmd`: The source R-Markdown files for technical analysis.
-* **Note on Data:** To protect the integrity of the project and proprietary training results, the pre-trained `.rds` model files are not included in this public repository. The code is provided for peer review and portfolio demonstration. The full application remains functional at the live link above.
+* **Note on Data:** To protect the integrity of the project and proprietary training results, the pre-trained `.rds` model files are not included in this public repository. The code is provided for portfolio demonstration. The full application remains functional at the live link above.
 
 ##  Tech Stack
 * **Language:** R
