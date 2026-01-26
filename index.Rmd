@@ -171,5 +171,4 @@ I will implement a *Katz Back-off* model.
 
 ### Source Code
 
-
 The full source code for this project and the final Shiny Application is available on GitHub: [View Source on GitHub](https://github.com/realAltamashAli/bilingual-swiftkey-nlp)
