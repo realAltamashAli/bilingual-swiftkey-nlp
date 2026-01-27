@@ -1693,11 +1693,19 @@ font-weight: bold;
 transition: 0.3s;
 font-size: 14px;
 box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+display: inline-flex;
+align-items: center;
 }
 .btn-lang:hover {
 background-color: #2c3e50;
 color: white;
 text-decoration: none;
+}
+.flag-icon {
+width: 20px;
+height: auto;
+margin-right: 8px;
+border-radius: 2px;
 }
 
 #executive-summary {
@@ -1726,8 +1734,9 @@ padding-bottom: 50px !important;
 }
 </style>
 <div class="lang-toggle">
-<p><a href="index-de.html" class="btn-lang">🇩🇪 Auf Deutsch
-wechseln</a></p>
+<p><a href="index-de.html" class="btn-lang">
+<img role="img" class="flag-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGlkPSJmbGFnLWljb25zLWRlIiB2aWV3Qm94PSIwIDAgNjQwIDQ4MCI+CiAgPHBhdGggZmlsbD0iI2ZjMCIgZD0iTTAgMzIwaDY0MHYxNjBIMHoiLz4KICA8cGF0aCBmaWxsPSIjMDAwMDAxIiBkPSJNMCAwaDY0MHYxNjBIMHoiLz4KICA8cGF0aCBmaWxsPSJyZWQiIGQ9Ik0wIDE2MGg2NDB2MTYwSDB6Ii8+Cjwvc3ZnPgo=">
+Auf Deutsch wechseln </a></p>
 </div>
 <div id="executive-summary" class="section level1">
 <h1>Executive Summary</h1>
@@ -1744,8 +1753,8 @@ algorithm.</p>
 of text.</li>
 <li><code>Sampling :</code> 1% random sample used for computational
 efficiency and reproducibility.</li>
-<li><code>Tools    :</code> <code>tidytext</code> for tokenization and
-<code>ggplot2</code> for frequency visualization.</li>
+<li><code>Tools    :</code> tidytext for tokenization and ggplot2 for
+frequency visualization.</li>
 </ul>
 </div>
 <div id="key-findings" class="section level3">
@@ -1815,10 +1824,10 @@ sub-second prediction latency in the final product.</p>
 </div>
 <div id="data-cleaning-sampling" class="section level1">
 <h1>Data Cleaning &amp; Sampling</h1>
-<p>To ensure the algorithm remains fast and responsive, I extracted a
-<em>1% random sample</em>. The cleaning pipeline included: conversion to
-lowercase, removal of punctuation and numbers, and filtering of excess
-white space.</p>
+<p>To ensure the algorithm remains fast and responsive, I extracted a 1%
+random sample. The cleaning pipeline included: conversion to lowercase,
+removal of punctuation and numbers, and filtering of excess white
+space.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>sample_data <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">sample</span>(blogs, <span class="fu">length</span>(blogs) <span class="sc">*</span> <span class="fl">0.01</span>),</span>
 <span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>                 <span class="fu">sample</span>(news, <span class="fu">length</span>(news) <span class="sc">*</span> <span class="fl">0.01</span>),</span>
@@ -1828,9 +1837,8 @@ white space.</p>
 </div>
 <div id="exploratory-analysis" class="section level1">
 <h1>Exploratory Analysis</h1>
-<p>I analyzed <em>N-grams</em>, which are sequences of words. This
-identifies the probability of word transitions—the core logic of my
-predictor.</p>
+<p>I analyzed N-grams, which are sequences of words. This identifies the
+probability of word transitions—the core logic of my predictor.</p>
 <div id="top-bigrams-two-word-pairs" class="section level3">
 <h3>Top Bigrams (Two-Word Pairs)</h3>
 <p>Bigrams are the foundation of my next-word prediction. For example,
@@ -1853,7 +1861,7 @@ anchors.</p>
 <h1>Modeling Strategy</h1>
 <div id="the-algorithm" class="section level3">
 <h3>1. The Algorithm</h3>
-<p>I will implement a <em>Katz Back-off</em> model.</p>
+<p>I will implement a Katz Back-off model.</p>
 <ul>
 <li><code>Trigram Match  :</code> System first looks for a match based
 on the last two words typed.</li>
