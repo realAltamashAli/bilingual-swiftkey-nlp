@@ -12,7 +12,7 @@
 <meta name="author" content="Altamash Ali" />
 
 
-<title>Bilinguale Vorhersagemodellierung: SwiftKey Milestone-Bericht (EN &amp; DE)</title>
+<title>Bilinguale Vorhersagemodellierung: Swiftkey Meilensteinbericht (EN &amp; DE)</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1665,8 +1665,8 @@ border-radius: 0px;
 
 
 
-<h1 class="title toc-ignore">Bilinguale Vorhersagemodellierung: SwiftKey
-Milestone-Bericht (EN &amp; DE)</h1>
+<h1 class="title toc-ignore">Bilinguale Vorhersagemodellierung: Swiftkey
+Meilensteinbericht (EN &amp; DE)</h1>
 <h4 class="author">Altamash Ali</h4>
 <h4 class="date">26. Januar 2026</h4>
 
@@ -1692,11 +1692,19 @@ font-weight: bold;
 transition: 0.3s;
 font-size: 14px;
 box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+display: inline-flex;
+align-items: center;
 }
 .btn-lang:hover {
 background-color: #2c3e50;
 color: white;
 text-decoration: none;
+}
+.flag-icon {
+width: 20px;
+height: auto;
+margin-right: 8px;
+border-radius: 2px;
 }
 
 #management-summary {
@@ -1725,7 +1733,9 @@ padding-bottom: 50px !important;
 }
 </style>
 <div class="lang-toggle">
-<p><a href="index.html" class="btn-lang">🇺🇸 View in English</a></p>
+<p><a href="index.html" class="btn-lang">
+<img role="img" class="flag-icon" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGlkPSJmbGFnLWljb25zLXVzIiB2aWV3Qm94PSIwIDAgNjQwIDQ4MCI+CiAgPHBhdGggZmlsbD0iI2JkM2Q0NCIgZD0iTTAgMGg2NDB2NDgwSDAiLz4KICA8cGF0aCBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMzciIGQ9Ik0wIDU1LjNoNjQwTTAgMTI5aDY0ME0wIDIwM2g2NDBNMCAyNzdoNjQwTTAgMzUxaDY0ME0wIDQyNWg2NDAiLz4KICA8cGF0aCBmaWxsPSIjMTkyZjVkIiBkPSJNMCAwaDM2NC44djI1OC41SDAiLz4KICA8bWFya2VyIGlkPSJ1cy1hIiBtYXJrZXJIZWlnaHQ9IjMwIiBtYXJrZXJXaWR0aD0iMzAiPgogICAgPHBhdGggZmlsbD0iI2ZmZiIgZD0ibTE0IDAgOSAyN0wwIDEwaDI4TDUgMjd6Ii8+CiAgPC9tYXJrZXI+CiAgPHBhdGggZmlsbD0ibm9uZSIgbWFya2VyLW1pZD0idXJsKCN1cy1hKSIgZD0ibTAgMCAxNiAxMWg2MSA2MSA2MSA2MSA2MEw0NyAzN2g2MSA2MSA2MCA2MUwxNiA2M2g2MSA2MSA2MSA2MSA2MEw0NyA4OWg2MSA2MSA2MCA2MUwxNiAxMTVoNjEgNjEgNjEgNjEgNjBMNDcgMTQxaDYxIDYxIDYwIDYxTDE2IDE2Nmg2MSA2MSA2MSA2MSA2MEw0NyAxOTJoNjEgNjEgNjAgNjFMMTYgMjE4aDYxIDYxIDYxIDYxIDYweiIvPgo8L3N2Zz4K">
+View in English </a></p>
 </div>
 <div id="management-zusammenfassung" class="section level1">
 <h1>Management Zusammenfassung</h1>
@@ -1742,8 +1752,8 @@ zu schaffen.</p>
 Textzeilen.</li>
 <li><code>Stichprobe :</code> 1% Zufallsstichprobe zur Sicherstellung
 der Recheneffizienz.</li>
-<li><code>Tools      :</code> <code>tidytext</code> zur Tokenisierung
-und <code>ggplot2</code> zur Visualisierung.</li>
+<li><code>Tools      :</code> tidytext zur Tokenisierung und ggplot2 zur
+Visualisierung.</li>
 </ul>
 </div>
 <div id="wichtige-ergebnisse" class="section level3">
@@ -1815,8 +1825,8 @@ bewerten.</p>
 </div>
 <div id="datenbereinigung-stichprobenziehung" class="section level1">
 <h1>Datenbereinigung &amp; Stichprobenziehung</h1>
-<p>Um eine schnelle App-Reaktion zu gewährleisten, wurde eine <em>1%
-Zufallsstichprobe</em> gezogen. Die Bereinigung umfasste: Umwandlung in
+<p>Um eine schnelle App-Reaktion zu gewährleisten, wurde eine 1%
+Zufallsstichprobe gezogen. Die Bereinigung umfasste: Umwandlung in
 Kleinschreibung, Entfernung von Satzzeichen und Filtern von
 Sonderzeichen.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1234</span>)</span>
@@ -1828,9 +1838,8 @@ Sonderzeichen.</p>
 </div>
 <div id="explorative-analyse" class="section level1">
 <h1>Explorative Analyse</h1>
-<p>Ich habe <em>N-Gramme</em> (Wortfolgen) analysiert, um die
-Wahrscheinlichkeit von Wortübergängen zu bestimmen—die Kernlogik meines
-Prädiktors.</p>
+<p>Ich habe N-Gramme (Wortfolgen) analysiert, um die Wahrscheinlichkeit
+von Wortübergängen zu bestimmen—die Kernlogik meines Prädiktors.</p>
 <div id="häufigste-bigramme-wortpaare" class="section level3">
 <h3>Häufigste Bigramme (Wortpaare)</h3>
 <p>Bigramme bilden die Basis für die Vorhersage. Das Modell
@@ -1853,7 +1862,7 @@ hochfrequente Ankerpunkte.</p>
 <h1>Modellierungsstrategie</h1>
 <div id="der-algorithmus" class="section level3">
 <h3>1. Der Algorithmus</h3>
-<p>Ich implementiere ein <em>Katz-Back-off-Modell</em>.</p>
+<p>Ich implementiere ein Katz-Back-off-Modell.</p>
 <ul>
 <li><code>Trigramm-Match :</code> Suche nach Übereinstimmung basierend
 auf den letzten zwei Wörtern.</li>
@@ -1868,8 +1877,8 @@ Datensatz als Fallback.</li>
 <ul>
 <li><code>Pruning        :</code> Entfernung von N-Grammen mit nur einem
 Vorkommen.</li>
-<li><code>Datenstruktur  :</code> Nutzung von <code>.rds</code>-Dateien
-für optimierte Ladezeiten.</li>
+<li><code>Datenstruktur  :</code> Nutzung von .rds-Dateien für
+optimierte Ladezeiten.</li>
 </ul>
 </div>
 <div id="quellcode" class="section level3">
