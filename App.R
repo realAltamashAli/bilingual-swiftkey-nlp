@@ -30,10 +30,9 @@ ui <- page_fillable(
         justify-content: center; 
         min-height: 100vh; 
         margin: 0;
-        padding: 15px; /* Adds breathing room on mobile */
+        padding: 15px; 
       }
       
-      /* Ensure the card is centered and doesn't overflow horizontally */
       .container-fluid {
         width: 100%;
         display: flex;
@@ -47,7 +46,7 @@ ui <- page_fillable(
         box-shadow: 0 15px 45px rgba(26, 82, 118, 0.15); 
         width: 100%;
         max-width: 1000px; 
-        margin: auto; /* Critical for centering */
+        margin: auto; 
         background-color: white;
       }
 
@@ -69,33 +68,27 @@ ui <- page_fillable(
       #user_input { font-size: 1.2rem; border-radius: 12px; border: 2px solid #eaeded; resize: none; }
       #user_input:focus { border-color: #1a5276; box-shadow: none; }
       
-      /* Flag Image Styling - Fixed for SVG compatibility */
       .flag-img { height: 16px; width: auto; vertical-align: middle; margin-right: 8px; border-radius: 2px; }
+      .footer-link { color: #1a5276; text-decoration: none; font-weight: 600; margin: 0 10px; transition: opacity 0.2s; }
+      .footer-link:hover { opacity: 0.7; color: #1a5276; }
       
-      /* Allow scrolling on mobile if content is tall */
       html, body { overflow-x: hidden; overflow-y: auto; }
     ")),
     
     tags$script(HTML("
-      // CLICK HANDLER
       $(document).on('click', '.predict-btn', function() {
         var word = $(this).text().trim();
         var textArea = $('#user_input');
         var currentVal = textArea.val().replace(/[\\r\\n]/g, ' ').replace(/\\s+/g, ' ').trim();
-        
-        // Append word + space
         var newVal = currentVal + (currentVal.length > 0 ? ' ' : '') + word + ' ';
-        
-        // Update the UI and trigger Shiny
         textArea.val(newVal);
         textArea.trigger('change');
         textArea.focus();
       });
 
-      // ENTER KEY HANDLER
       $(document).on('keydown', '#user_input', function(e) {
         if(e.which == 13) { 
-          e.preventDefault(); // HARD BLOCK on the newline
+          e.preventDefault();
           var firstBtn = $('.predict-btn').first();
           if(firstBtn.length > 0) {
             firstBtn.click();
@@ -112,7 +105,6 @@ ui <- page_fillable(
         card_header(
           div(style = "display: flex; justify-content: space-between; align-items: center;",
               uiOutput("app_title"),
-              # FIX: Using lipis/flag-icons SVG assets for Universal Compatibility
               radioButtons("lang", NULL, 
                            choiceNames = list(
                              HTML("<img src='https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg' class='flag-img'> English"),
@@ -135,8 +127,23 @@ ui <- page_fillable(
           )
         ),
         card_footer(
-          p(style="font-size: 0.8rem; color: #95a5a6; text-align: center; margin: 0;", 
-            "Bilingual Predictive Engine © 2026 Altamash Ali | Powered by HC Corpora")
+          div(style="text-align: center; padding: 10px 0;",
+              # New Resource Links
+              div(style="margin-bottom: 10px;",
+                  tags$a(href="https://realaltamashali.github.io/bilingual-swiftkey-nlp/index.html", 
+                         class="footer-link", target="_blank",
+                         HTML("<img src='https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg' style='height:12px; margin-right:5px;'> Technical Analysis")),
+                  tags$a(href="https://realaltamashali.github.io/bilingual-swiftkey-nlp/index-de.html", 
+                         class="footer-link", target="_blank",
+                         HTML("<img src='https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/de.svg' style='height:12px; margin-right:5px;'> Technische Analyse")),
+                  tags$a(href="https://github.com/realAltamashAli/bilingual-swiftkey-nlp", 
+                         class="footer-link", target="_blank",
+                         icon("github"), " Source Code")
+              ),
+              # Copyright Line
+              p(style="font-size: 0.8rem; color: #95a5a6; margin: 0;", 
+                "Bilingual Predictive Engine © 2026 Altamash Ali | Powered by HC Corpora")
+          )
         )
       )
   )
@@ -149,7 +156,7 @@ server <- function(input, output, session) {
     if (input$lang == "en") {
       list(title = "SWIFTKEY PRO", sidebar_title = "APP INFORMATION", sidebar_desc = "This model uses a Katz Back-off algorithm to predict words based on Quadgram, Trigram, and Bigram frequencies.", status = "Status: High-Precision Mode", input_label = "Enter your text below to generate smart predictions:", placeholder = "Type something here...", suggested = "SUGGESTED NEXT WORDS:", awaiting = "Awaiting input...", model_info = "Model: English US")
     } else {
-      list(title = "SWIFTKEY PRO", sidebar_title = "APP-INFORMATIONEN", sidebar_desc = "Dieses Modell verwendet einen Katz-Back-off-Algorithmus, um Wörter basierend auf Quadgramm-, Trigramm- und Bigramm-Frequenzen vorherzusagen.", status = "Status: Hochpräzisionsmodus", input_label = "Geben Sie unten Ihren Text ein, um intelligente Vorhersagen zu generieren:", placeholder = "Schreiben Sie hier etwas...", suggested = "VORGESCHLAGENE NÄCHSTE WÖRTER:", awaiting = "Warte auf Eingabe...", model_info = "Modell: Deutsch DE")
+      list(title = "SWIFTKEY PRO", sidebar_title = "APP INFORMATIONEN", sidebar_desc = "Dieses Modell verwendet einen Katz-Back-off-Algorithmus, um Wörter basierend auf Quadgramm-, Trigramm- und Bigramm-Frequenzen vorherzusagen.", status = "Status: Hochpräzisionsmodus", input_label = "Geben Sie unten Ihren Text ein, um intelligente Vorhersagen zu generieren:", placeholder = "Schreiben Sie hier etwas...", suggested = "VORGESCHLAGENE NÄCHSTE WÖRTER:", awaiting = "Warte auf Eingabe...", model_info = "Modell: Deutsch DE")
     }
   })
   
@@ -166,7 +173,6 @@ server <- function(input, output, session) {
   
   predict_next <- reactive({
     req(input$user_input)
-    # Clean input for modeling
     clean_input <- tolower(input$user_input) %>% str_replace_all("[^a-zäöüß ]", " ") %>% str_squish()
     words <- unlist(strsplit(clean_input, " "))
     n_words <- length(words)
