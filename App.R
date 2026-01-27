@@ -22,23 +22,35 @@ ui <- page_fillable(
   theme = my_theme,
   tags$head(
     tags$style(HTML("
+      /* Universal Centering Fixes */
       body { 
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); 
         display: flex; 
         align-items: center; 
         justify-content: center; 
         min-height: 100vh; 
-        margin: 0; 
+        margin: 0;
+        padding: 15px; /* Adds breathing room on mobile */
       }
+      
+      /* Ensure the card is centered and doesn't overflow horizontally */
+      .container-fluid {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 0;
+      }
+
       .prediction-card { 
         border-radius: 20px; 
         border: none; 
         box-shadow: 0 15px 45px rgba(26, 82, 118, 0.15); 
         width: 100%;
         max-width: 1000px; 
-        margin: auto;
+        margin: auto; /* Critical for centering */
         background-color: white;
       }
+
       .predict-btn { 
         border-radius: 50px; 
         padding: 12px 28px; 
@@ -53,9 +65,15 @@ ui <- page_fillable(
         color: white !important; 
         transform: translateY(-3px); 
       }
+      
       #user_input { font-size: 1.2rem; border-radius: 12px; border: 2px solid #eaeded; resize: none; }
       #user_input:focus { border-color: #1a5276; box-shadow: none; }
-      html, body { overflow: hidden; }
+      
+      /* Flag Image Styling - Fixed for SVG compatibility */
+      .flag-img { height: 16px; width: auto; vertical-align: middle; margin-right: 8px; border-radius: 2px; }
+      
+      /* Allow scrolling on mobile if content is tall */
+      html, body { overflow-x: hidden; overflow-y: auto; }
     ")),
     
     tags$script(HTML("
@@ -94,7 +112,14 @@ ui <- page_fillable(
         card_header(
           div(style = "display: flex; justify-content: space-between; align-items: center;",
               uiOutput("app_title"),
-              radioButtons("lang", NULL, choices = c("🇺🇸 English" = "en", "🇩🇪 Deutsch" = "de"), inline = TRUE)
+              # FIX: Using lipis/flag-icons SVG assets for Universal Compatibility
+              radioButtons("lang", NULL, 
+                           choiceNames = list(
+                             HTML("<img src='https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/us.svg' class='flag-img'> English"),
+                             HTML("<img src='https://cdn.jsdelivr.net/gh/lipis/flag-icons/flags/4x3/de.svg' class='flag-img'> Deutsch")
+                           ),
+                           choiceValues = list("en", "de"),
+                           inline = TRUE)
           )
         ),
         layout_sidebar(
