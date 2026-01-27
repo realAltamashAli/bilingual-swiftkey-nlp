@@ -1,5 +1,5 @@
 ---
-title: "Bilinguale Vorhersagemodellierung: SwiftKey Milestone-Bericht (EN & DE)"
+title: "Bilinguale Vorhersagemodellierung: Swiftkey Meilensteinbericht (EN & DE)"
 author: "Altamash Ali"
 date: "26. Januar 2026"
 output: 
@@ -30,11 +30,19 @@ output:
     transition: 0.3s;
     font-size: 14px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: inline-flex;
+    align-items: center;
 }
 .btn-lang:hover {
     background-color: #2c3e50;
     color: white;
     text-decoration: none;
+}
+.flag-icon {
+    width: 20px;
+    height: auto;
+    margin-right: 8px;
+    border-radius: 2px;
 }
 
 /* --- DEINE ORIGINALEN STYLES --- */
@@ -71,7 +79,9 @@ body {
 </style>
 
 <div class="lang-toggle">
-  <a href="index.html" class="btn-lang">🇺🇸 View in English</a>
+  <a href="index.html" class="btn-lang">
+    <img class="flag-icon" src="https://raw.githubusercontent.com/lipis/flag-icons/main/flags/4x3/us.svg"> View in English
+  </a>
 </div>
 
 ```{r setup, include=FALSE}
@@ -89,7 +99,7 @@ Untersuchung des HC Corpora-Datensatzes (Blogs, News und Twitter), um eine Grund
 
 * `Datensatz  :` HC Corpora (DE-DE) mit über 2 Mio. Textzeilen.
 * `Stichprobe :` 1% Zufallsstichprobe zur Sicherstellung der Recheneffizienz.
-* `Tools      :` `tidytext` zur Tokenisierung und `ggplot2` zur Visualisierung.
+* `Tools      :` tidytext zur Tokenisierung und ggplot2 zur Visualisierung.
 
 ### Wichtige Ergebnisse
 
@@ -119,7 +129,7 @@ kable(summary_table_de, caption = "Zusammenfassung der deutschen Rohdateien", di
 
 # Datenbereinigung & Stichprobenziehung
 
-Um eine schnelle App-Reaktion zu gewährleisten, wurde eine *1% Zufallsstichprobe* gezogen. Die Bereinigung umfasste: Umwandlung in Kleinschreibung, Entfernung von Satzzeichen und Filtern von Sonderzeichen.
+Um eine schnelle App-Reaktion zu gewährleisten, wurde eine 1% Zufallsstichprobe gezogen. Die Bereinigung umfasste: Umwandlung in Kleinschreibung, Entfernung von Satzzeichen und Filtern von Sonderzeichen.
 
 ```{r}
 set.seed(1234)
@@ -132,7 +142,7 @@ sample_df_de <- data.frame(text = sample_de, stringsAsFactors = FALSE)
 
 # Explorative Analyse
 
-Ich habe *N-Gramme* (Wortfolgen) analysiert, um die Wahrscheinlichkeit von Wortübergängen zu bestimmen—die Kernlogik meines Prädiktors.
+Ich habe N-Gramme (Wortfolgen) analysiert, um die Wahrscheinlichkeit von Wortübergängen zu bestimmen—die Kernlogik meines Prädiktors.
 
 ### Häufigste Bigramme (Wortpaare)
 
@@ -155,7 +165,7 @@ ggplot(bigrams_de, aes(x = reorder(bigram, n), y = n)) +
 
 ### 1. Der Algorithmus
 
-Ich implementiere ein *Katz-Back-off-Modell*.
+Ich implementiere ein Katz-Back-off-Modell.
 
 * `Trigramm-Match :` Suche nach Übereinstimmung basierend auf den letzten zwei Wörtern.
 * `Bigramm-Match  :` Rückgriff auf Ein-Wort-Match, falls kein Trigramm existiert.
@@ -164,7 +174,7 @@ Ich implementiere ein *Katz-Back-off-Modell*.
 ### 2. Performance-Optimierung
 
 * `Pruning        :` Entfernung von N-Grammen mit nur einem Vorkommen.
-* `Datenstruktur  :` Nutzung von `.rds`-Dateien für optimierte Ladezeiten.
+* `Datenstruktur  :` Nutzung von .rds-Dateien für optimierte Ladezeiten.
 
 ### Quellcode
 
