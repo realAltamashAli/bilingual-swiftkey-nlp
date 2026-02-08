@@ -1,9 +1,9 @@
 #  SwiftKey Pro: Bilingual Next-Word Predictor
 ### High-Performance NLP Web Application | English & German Support
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Shiny](https://img.shields.io/badge/Shiny-Live_App-1a5276)](https://altamashali.shinyapps.io/bilingual-swiftkey-nlp/)
 [![R](https://img.shields.io/badge/R-4.3.0%2B-blue)](https://www.r-project.org/)
+[![License: CC BY-NC-ND 4.0](https://img.shields.io/badge/License-CC%20BY--NC--ND%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
 SwiftKey Pro is a professional text prediction tool that suggests the most likely next word in a sequence. Developed as a capstone project, it demonstrates the application of Natural Language Processing (NLP) to provide a smartphone-like typing experience for both **English (US)** and **German (DE)** users.
 
