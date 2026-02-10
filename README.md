@@ -36,8 +36,5 @@ The engine was built using the **HC Corpora** dataset, following a rigorous data
 * **UI Components:** `bslib`, `JavaScript` (for input handling)
 * **Data Processing:** `data.table`, `stringr`
 
-##  License
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
-
 ---
 **Developed by Altamash Ali** [GitHub Profile](https://github.com/realAltamashAli)
